@@ -8,7 +8,7 @@ using Oasis_task.Model;
 
 namespace Oasis_task.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class TodosController : ControllerBase
@@ -21,13 +21,13 @@ namespace Oasis_task.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        [HttpGet]
+        [HttpGet("GetAllTodos")]
         public async Task<IActionResult> GetAllTodos()
         {
             var todos = await _unitOfWork.TodoRepository.GetAllTodosAsync();
             return Ok(todos);
         }
-        [HttpPost]
+        [HttpPost("addTodo")] 
         public async Task<IActionResult> CreateTodoAsync(Todo todo)
         {
             _dbContext.Todo.Add(todo);
@@ -36,7 +36,7 @@ namespace Oasis_task.Controllers
 
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("GetById")]
         public async Task<ActionResult<Todo>> GetTodoById(int id)
         {
             var todo = await _unitOfWork.TodoRepository.GetTodoByIdAsync(id);
@@ -47,7 +47,7 @@ namespace Oasis_task.Controllers
             return todo;
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("Update")]
         public async Task<IActionResult> UpdateAsync(int id, Todo todo)
         {
             if (id != todo.Id)
@@ -58,7 +58,7 @@ namespace Oasis_task.Controllers
             return Ok();
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("Delete")]
         public async Task<IActionResult> DeleteAsync(int id)
         {
            await _unitOfWork.TodoRepository.DeleteTodoAsync(id);
