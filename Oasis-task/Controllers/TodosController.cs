@@ -22,9 +22,10 @@ namespace Oasis_task.Controllers
         }
 
         [HttpGet("GetAllTodos")]
-        public async Task<IActionResult> GetAllTodos()
+        public async Task<IActionResult> GetAllTodos(int page, int pageSize)
         {
-            var todos = await _unitOfWork.TodoRepository.GetAllTodosAsync();
+
+            var todos = await _unitOfWork.TodoRepository.GetAllTodosAsync(page, pageSize);
             return Ok(todos);
         }
         [HttpPost("addTodo")] 

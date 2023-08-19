@@ -22,10 +22,10 @@ namespace Oasis_task.Data.Repositories
         }
 
         //public async Task<IEnumerable<Todo>> GetAllTodosAsync(int UserId)
-        public async Task<IEnumerable<Todo>> GetAllTodosAsync()
+        public async Task<IEnumerable<Todo>> GetAllTodosAsync(int page, int pageSize)
         {
 
-            return await _dbContext.Todo.ToListAsync();
+            return await _dbContext.Todo.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
             //return await _dbContext.Todo.Where(x => x.UserId == UserId).ToListAsync();
         }
 
